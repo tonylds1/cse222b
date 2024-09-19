@@ -33,11 +33,7 @@ fun task1(aString: String?): Int {
 // Task 2
 // Convert the input string into an integer. If the string cannot be converted into an integer, return  null
 fun task2(aString: String): Int? {
-    try {
-        return aString.toInt()
-    } catch (e: NumberFormatException) {
-        return null
-    }
+    return aString.toIntOrNull()
 }
 
 
@@ -62,13 +58,17 @@ fun task3(): List<task3Func> {
     },fun (lhs: Int, rhs: Int): Int {
         return lhs * rhs
     },fun (lhs: Int, rhs: Int): Int {
-        return if (lhs < rhs) -1
-        else if (lhs == rhs) 0
-        else 1
+        return when {
+            lhs < rhs -> -1
+            lhs == rhs -> 0
+            else -> 1
+        }
     },fun (lhs: Int, rhs: Int): Int {
-        return if ((lhs + rhs) % 2 != 0) 0
-        else if (lhs % 2 == 0) 1
-        else -1
+        return when {
+            (lhs + rhs) % 2 != 0 -> 0
+            lhs % 2 == 0 -> 1
+            else -> -1
+        }
     })
 }
 
@@ -106,15 +106,11 @@ fun task7(input: List<List<Int?>?>): Int {
 //
 // Hint: https://kotlinlang.org/docs/ranges.html
 fun task8(rows: Int, columns: Int, max: Int): List<List<Int>> {
-    val list = mutableListOf<List<Int>>()
-    for (i in 0 ..< rows) {
-        val sublist = mutableListOf<Int>()
-        for (j in 0 ..< columns) {
-            sublist.add(Random.nextInt(max))
+    return List(rows) {
+        List(columns) {
+            (0..max).random()
         }
-        list.add(sublist)
     }
-    return list
 }
 
 // Task 9
