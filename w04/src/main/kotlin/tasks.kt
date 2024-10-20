@@ -369,7 +369,6 @@ class Circle(private val radius: Double): Shape {
 }
 class Triangle(private val base: Double, private val height: Double): Shape {
     override fun area(): Double {
-        return 0.5 * base * height
     }
 }
 class Rectangle(private val width: Double, private val height: Double): Shape {
