@@ -9,7 +9,8 @@ data class Trip (
     val arrivalPoint: String,
     val departureDateTime: LocalDateTime,
     val arrivalDateTime: LocalDateTime,
-    val bus: Bus
+    val bus: Bus,
+    val passengers: MutableMap<Int, Passenger?> = mutableMapOf()
 )
 
 fun Trip.printTripInfo() {
@@ -23,15 +24,33 @@ fun Trip.printTripInfo() {
 }
 
 fun Trip.addPassenger(seat: Int, passenger: Passenger): Boolean {
-    return bus.addPassenger(seat, passenger)
+    return if (seat < bus.capacity && isSeatAvailable(seat)) {
+        passengers[seat] = passenger
+        true
+    } else {
+        false
+    }
 }
 
 fun Trip.removePassenger(passenger: Passenger): Boolean {
-    return bus.removePassenger(passenger)
+    val seatNumber = passengers.entries.firstOrNull { it.value == passenger }?.key
+    return if (seatNumber != null) {
+        passengers[seatNumber] = null
+        true
+    } else {
+        false
+    }
 }
 
 fun Trip.printPassengerList() {
-    bus.printPassengerList()
+    if (passengers.isEmpty()) {
+        println("No passengers on board")
+        return
+    }
+
+    passengers.forEach { (seatNumber, passenger) ->
+        println("Seat number: $seatNumber, Passenger: $passenger")
+    }
 }
 
 fun Trip.startTrip() {
@@ -39,4 +58,8 @@ fun Trip.startTrip() {
 
     this.printTripInfo()
     this.printPassengerList()
+}
+
+ fun Trip.isSeatAvailable(seatNumber: Int): Boolean {
+    return passengers[seatNumber] == null
 }

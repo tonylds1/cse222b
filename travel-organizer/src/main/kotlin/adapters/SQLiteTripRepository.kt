@@ -21,6 +21,7 @@ class SQLiteTripRepository : TripRepository {
 
     override fun update(trip: Trip) {
         val index = trips.indexOfFirst { it.id == trip.id }
+        trip.bus
         trips[index] = trip
     }
 

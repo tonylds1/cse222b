@@ -28,7 +28,7 @@ class TravelOrganizerApplication {
         val buses = busRepository.findAll()
 
         println("Bus 01 is available.")
-        buses.first().printPassengerList()
+        buses.first().printBusInfo()
     }
 
     fun scheduleTrip() {
@@ -110,6 +110,7 @@ class TravelOrganizerApplication {
             }
         }
 
+        tripRepository.update(trip)
         println("Passengers with unpaid receipts were removed from the trip.")
     }
 

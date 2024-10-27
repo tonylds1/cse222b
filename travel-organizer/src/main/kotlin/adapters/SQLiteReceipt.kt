@@ -15,7 +15,7 @@ class SQLiteReceipt : ReceiptRepository {
     }
 
     override fun listPassengerPaymentStatus(tripId: UUID): List<Pair<Passenger, PaymentStatus>> {
-        return receipts.filter { it.trip.id == tripId && it.isPaid() }.map { it.passenger to it.status }
+        return receipts.filter { it.trip.id == tripId }.map { it.passenger to it.status }
     }
 
     override fun save(receipt: Receipt) {
